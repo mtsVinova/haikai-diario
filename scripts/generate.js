@@ -38,6 +38,12 @@ EXEMPLOS DO ESTILO (não copie, inspire-se):
 "louça suja / louça limpa / louça suja"
 "estou triste / porque ontem fui feliz / nada mais natural"
 
+IMPORTANTE — VARIAÇÃO
+- Nunca repita imagens, objetos ou temas usados nos haikais recentes informados pelo usuário
+- Varie entre os temas disponíveis: natureza, amor, escrita, cotidiano, tempo, paradoxo
+- Se os recentes usaram objetos domésticos, vá para natureza ou abstração
+- Se os recentes foram sobre amor, vá para solidão, escrita ou tempo
+
 Gere apenas um haikai. Sem título, sem explicação, sem aspas.
 Responda SOMENTE com o JSON abaixo e nada mais — nem texto antes, nem depois, nem markdown:
 {
@@ -49,6 +55,29 @@ Responda SOMENTE com o JSON abaixo e nada mais — nem texto antes, nem depois, 
 Traduza para inglês e espanhol mantendo o espírito — não traduza palavra por palavra, recrie o poema na outra língua.`;
 
 async function generateHaikai() {
+  const dataPath = path.join(__dirname, "../data/haikais.json");
+  let haikais = [];
+
+  if (fs.existsSync(dataPath)) {
+    const raw = fs.readFileSync(dataPath, "utf-8");
+    haikais = JSON.parse(raw);
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+
+  const alreadyExists = haikais.some((h) => h.date === today);
+  if (alreadyExists) {
+    console.log(`Haikai de ${today} já existe. Nada a fazer.`);
+    return;
+  }
+
+  const recent = haikais.slice(0, 5);
+  const recentText =
+    recent.length > 0
+      ? "Haikais recentes (NÃO repita estes temas, imagens ou objetos):\n" +
+        recent.map((h, i) => `${i + 1}. [${h.date}]\n${h.pt}`).join("\n\n")
+      : "Nenhum haikai anterior ainda.";
+
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -60,7 +89,12 @@ async function generateHaikai() {
       model: "claude-opus-4-5",
       max_tokens: 300,
       system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: "Gere o haikai de hoje." }],
+      messages: [
+        {
+          role: "user",
+          content: `${recentText}\n\nAgora gere o haikai de hoje (${today}), diferente de todos os acima.`,
+        },
+      ],
     }),
   });
 
@@ -78,23 +112,6 @@ async function generateHaikai() {
     const match = text.match(/\{[\s\S]*\}/);
     if (!match) throw new Error("Resposta inválida da API: " + text);
     parsed = JSON.parse(match[0]);
-  }
-
-  const today = new Date().toISOString().split("T")[0];
-
-  const dataPath = path.join(__dirname, "../data/haikais.json");
-  let haikais = [];
-
-  if (fs.existsSync(dataPath)) {
-    const raw = fs.readFileSync(dataPath, "utf-8");
-    haikais = JSON.parse(raw);
-  }
-
-  // Evita duplicata do mesmo dia
-  const alreadyExists = haikais.some((h) => h.date === today);
-  if (alreadyExists) {
-    console.log(`Haikai de ${today} já existe. Nada a fazer.`);
-    return;
   }
 
   haikais.unshift({ date: today, ...parsed });
