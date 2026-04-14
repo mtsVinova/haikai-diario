@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 
 type Lang = "pt" | "en" | "es";
 
-const FLAGS: Record<Lang, string> = {
-  pt: "🇧🇷",
-  en: "🇺🇸",
-  es: "🇪🇸",
+const FLAGS: Record<Lang, { src: string; label: string }> = {
+  pt: { src: "https://flagcdn.com/w40/br.png", label: "Português" },
+  en: { src: "https://flagcdn.com/w40/us.png", label: "English" },
+  es: { src: "https://flagcdn.com/w40/es.png", label: "Español" },
 };
 
 interface Props {
@@ -31,24 +31,29 @@ export default function LangSelector({ onChange }: Props) {
   };
 
   return (
-    <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
+    <div style={{ display: "flex", gap: "0.6rem", alignItems: "center", justifyContent: "flex-end" }}>
       {(["pt", "en", "es"] as Lang[]).map((l) => (
         <button
           key={l}
           onClick={() => select(l)}
+          title={FLAGS[l].label}
           style={{
             background: "none",
             border: "none",
             cursor: "pointer",
-            fontSize: "1.5rem",
+            padding: "0",
             opacity: lang === l ? 1 : 0.3,
             transition: "opacity 0.2s",
-            padding: "0",
-            lineHeight: 1,
-            fontFamily: "Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif",
+            lineHeight: 0,
           }}
         >
-          {FLAGS[l]}
+          <img
+            src={FLAGS[l].src}
+            alt={FLAGS[l].label}
+            width={20}
+            height={14}
+            style={{ display: "block", borderRadius: "2px" }}
+          />
         </button>
       ))}
     </div>
