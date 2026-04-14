@@ -1,8 +1,15 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
 import haikais from "../../../data/haikais.json";
 import HaikaiCard from "../components/HaikaiCard";
+import LangSelector from "../components/LangSelector";
+
+type Lang = "pt" | "en" | "es";
 
 export default function Arquivo() {
+  const [lang, setLang] = useState<Lang>("pt");
+
   const formatDate = (dateStr: string) => {
     const [year, month, day] = dateStr.split("-").map(Number);
     const date = new Date(year, month - 1, day);
@@ -13,7 +20,6 @@ export default function Arquivo() {
     });
   };
 
-  // Agrupa por ano/mês
   const grouped: Record<string, typeof haikais> = {};
   haikais.forEach((h) => {
     const [year, month] = h.date.split("-");
@@ -43,7 +49,7 @@ export default function Arquivo() {
           marginBottom: "4rem",
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "baseline",
+          alignItems: "center",
         }}
       >
         <Link
@@ -56,15 +62,18 @@ export default function Arquivo() {
         >
           ← hoje
         </Link>
-        <span
-          style={{
-            fontSize: "0.8rem",
-            letterSpacing: "0.15em",
-            color: "var(--gray)",
-          }}
-        >
-          arquivo
-        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
+          <LangSelector onChange={setLang} />
+          <span
+            style={{
+              fontSize: "0.8rem",
+              letterSpacing: "0.15em",
+              color: "var(--gray)",
+            }}
+          >
+            arquivo
+          </span>
+        </div>
       </header>
 
       {sortedGroups.map((groupKey) => (
@@ -105,6 +114,7 @@ export default function Arquivo() {
                   pt={haikai.pt}
                   en={haikai.en}
                   es={haikai.es}
+                  lang={lang}
                   size="small"
                 />
               </article>
