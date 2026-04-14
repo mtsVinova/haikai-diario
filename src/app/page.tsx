@@ -1,9 +1,15 @@
-import Link from "next/link";
+"use client";
+import { useState } from "react";
 import haikais from "../../data/haikais.json";
 import HaikaiCard from "./components/HaikaiCard";
+import LangSelector from "./components/LangSelector";
+import Link from "next/link";
+
+type Lang = "pt" | "en" | "es";
 
 export default function Home() {
   const today = haikais[0];
+  const [lang, setLang] = useState<Lang>("pt");
 
   const formatDate = (dateStr: string) => {
     const [year, month, day] = dateStr.split("-").map(Number);
@@ -33,7 +39,7 @@ export default function Home() {
           marginBottom: "5rem",
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "baseline",
+          alignItems: "center",
         }}
       >
         <span
@@ -46,16 +52,19 @@ export default function Home() {
         >
           haikai diário
         </span>
-        <Link
-          href="/arquivo"
-          style={{
-            fontSize: "0.75rem",
-            letterSpacing: "0.1em",
-            color: "var(--gray)",
-          }}
-        >
-          arquivo
-        </Link>
+        <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
+          <LangSelector onChange={setLang} />
+          <Link
+            href="/arquivo"
+            style={{
+              fontSize: "0.75rem",
+              letterSpacing: "0.1em",
+              color: "var(--gray)",
+            }}
+          >
+            arquivo
+          </Link>
+        </div>
       </header>
 
       <article style={{ flex: 1 }}>
@@ -65,14 +74,13 @@ export default function Home() {
             letterSpacing: "0.1em",
             color: "var(--gray)",
             marginBottom: "2.5rem",
-            fontStyle: "normal",
             fontWeight: 400,
           }}
         >
           {formatDate(today.date)}
         </p>
 
-        <HaikaiCard pt={today.pt} en={today.en} es={today.es} size="large" />
+        <HaikaiCard pt={today.pt} en={today.en} es={today.es} lang={lang} size="large" />
       </article>
 
       <footer
