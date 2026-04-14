@@ -34,64 +34,28 @@ export default function Home() {
         padding: "4rem 2rem",
       }}
     >
-      <header
-        style={{
-          marginBottom: "5rem",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <span
-          style={{
-            fontSize: "0.8rem",
-            letterSpacing: "0.15em",
-            color: "var(--gray)",
-            fontWeight: 400,
-          }}
-        >
-          haikai diário
-        </span>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+      <header style={{ marginBottom: "5rem" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "0.5rem" }}>
           <LangSelector onChange={setLang} />
-          <Link
-            href="/arquivo"
-            style={{
-              fontSize: "0.75rem",
-              letterSpacing: "0.1em",
-              color: "var(--gray)",
-            }}
-          >
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+          <span style={{ fontSize: "0.8rem", letterSpacing: "0.15em", color: "var(--gray)", fontWeight: 400 }}>
+            haikai diário
+          </span>
+          <Link href="/arquivo" style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)" }}>
             arquivo
           </Link>
         </div>
       </header>
 
       <article style={{ flex: 1 }}>
-        <p
-          style={{
-            fontSize: "0.75rem",
-            letterSpacing: "0.1em",
-            color: "var(--gray)",
-            marginBottom: "2.5rem",
-            fontWeight: 400,
-          }}
-        >
+        <p style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "2.5rem", fontWeight: 400 }}>
           {formatDate(today.date)}
         </p>
         <HaikaiCard pt={today.pt} en={today.en} es={today.es} lang={lang} size="large" />
       </article>
 
-      <footer
-        style={{
-          marginTop: "5rem",
-          borderTop: "1px solid var(--light-gray)",
-          paddingTop: "1.5rem",
-          fontSize: "0.7rem",
-          letterSpacing: "0.08em",
-          color: "var(--gray)",
-        }}
-      >
+      <footer style={{ marginTop: "5rem", borderTop: "1px solid var(--light-gray)", paddingTop: "1.5rem", fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--gray)" }}>
         um poema todo dia
       </footer>
     </main>

@@ -38,19 +38,14 @@ export default function Arquivo() {
 
   return (
     <main style={{ maxWidth: "560px", margin: "0 auto", padding: "4rem 2rem" }}>
-      <header
-        style={{
-          marginBottom: "4rem",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Link href="/" style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)" }}>
-          ← hoje
-        </Link>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+      <header style={{ marginBottom: "4rem" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "0.5rem" }}>
           <LangSelector onChange={setLang} />
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+          <Link href="/" style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)" }}>
+            ← hoje
+          </Link>
           <span style={{ fontSize: "0.8rem", letterSpacing: "0.15em", color: "var(--gray)" }}>
             arquivo
           </span>
