@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import haikais from "../../data/haikais.json";
-import HaikaiCard from "./components/HaikaiCard";
-import LangSelector from "./components/LangSelector";
+import haikais from "../../../data/haikais.json";
+import HaikaiCard from "../components/HaikaiCard";
+import LangSelector from "../components/LangSelector";
 import Link from "next/link";
 
 type Lang = "pt" | "en" | "es";
