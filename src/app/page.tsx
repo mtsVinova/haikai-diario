@@ -34,26 +34,21 @@ export default function Home() {
         padding: "4rem 2rem",
       }}
     >
-      <header
-        style={{
-          marginBottom: "5rem",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <span
-          style={{
-            fontSize: "0.8rem",
-            letterSpacing: "0.15em",
-            color: "var(--gray)",
-            fontWeight: 400,
-          }}
-        >
-          haikai diário
-        </span>
-        <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
+      <header style={{ marginBottom: "5rem" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "1rem" }}>
           <LangSelector onChange={setLang} />
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+          <span
+            style={{
+              fontSize: "0.8rem",
+              letterSpacing: "0.15em",
+              color: "var(--gray)",
+              fontWeight: 400,
+            }}
+          >
+            haikai diário
+          </span>
           <Link
             href="/arquivo"
             style={{
@@ -79,7 +74,6 @@ export default function Home() {
         >
           {formatDate(today.date)}
         </p>
-
         <HaikaiCard pt={today.pt} en={today.en} es={today.es} lang={lang} size="large" />
       </article>
 

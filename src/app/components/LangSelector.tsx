@@ -31,21 +31,21 @@ export default function LangSelector({ onChange }: Props) {
   };
 
   return (
-    <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+    <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
       {(["pt", "en", "es"] as Lang[]).map((l) => (
         <button
           key={l}
           onClick={() => select(l)}
-          title={l.toUpperCase()}
           style={{
             background: "none",
             border: "none",
             cursor: "pointer",
-            fontSize: "1.3rem",
-            opacity: lang === l ? 1 : 0.35,
+            fontSize: "1.5rem",
+            opacity: lang === l ? 1 : 0.3,
             transition: "opacity 0.2s",
             padding: "0",
             lineHeight: 1,
+            fontFamily: "Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif",
           }}
         >
           {FLAGS[l]}
