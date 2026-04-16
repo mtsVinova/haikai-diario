@@ -8,8 +8,10 @@ import Link from "next/link";
 type Lang = "pt" | "en" | "es";
 
 export default function Home() {
-  const today = haikais[0];
   const [lang, setLang] = useState<Lang>("pt");
+
+  const today = haikais[0]?.date;
+  const todayHaikais = haikais.filter((h) => h.date === today);
 
   const formatDate = (dateStr: string) => {
     const [year, month, day] = dateStr.split("-").map(Number);
@@ -50,9 +52,19 @@ export default function Home() {
 
       <article style={{ flex: 1 }}>
         <p style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "2.5rem", fontWeight: 400 }}>
-          {formatDate(today.date)}
+          {today ? formatDate(today) : ""}
         </p>
-        <HaikaiCard pt={today.pt} en={today.en} es={today.es} lang={lang} size="large" />
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "3.5rem" }}>
+          {todayHaikais.map((haikai, i) => (
+            <div key={(haikai as any).id || i}>
+              <HaikaiCard pt={haikai.pt} en={haikai.en} es={haikai.es} lang={lang} size="large" />
+              {i < todayHaikais.length - 1 && (
+                <div style={{ marginTop: "3.5rem", borderTop: "1px solid var(--light-gray)" }} />
+              )}
+            </div>
+          ))}
+        </div>
       </article>
 
       <footer style={{ marginTop: "5rem", borderTop: "1px solid var(--light-gray)", paddingTop: "1.5rem", fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--gray)" }}>
