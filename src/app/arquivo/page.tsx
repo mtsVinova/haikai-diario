@@ -37,9 +37,9 @@ export default function Arquivo() {
   const sortedGroups = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
 
   return (
-    <main style={{ maxWidth: "560px", margin: "0 auto", padding: "4rem 2rem" }}>
-      <header style={{ marginBottom: "4rem" }}>
-        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "0.5rem" }}>
+    <main style={{ maxWidth: "560px", margin: "0 auto", padding: "2rem 2rem" }}>
+      <header style={{ marginBottom: "2.5rem" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "0.4rem" }}>
           <LangSelector onChange={setLang} />
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -53,14 +53,14 @@ export default function Arquivo() {
       </header>
 
       {sortedGroups.map((groupKey) => (
-        <section key={groupKey} style={{ marginBottom: "4rem" }}>
-          <h2 style={{ fontSize: "0.7rem", letterSpacing: "0.18em", color: "var(--gray)", fontWeight: 400, marginBottom: "2rem", textTransform: "uppercase" }}>
+        <section key={groupKey} style={{ marginBottom: "2.5rem" }}>
+          <h2 style={{ fontSize: "0.7rem", letterSpacing: "0.18em", color: "var(--gray)", fontWeight: 400, marginBottom: "1.5rem", textTransform: "uppercase" }}>
             {monthLabel(groupKey)}
           </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
             {grouped[groupKey].map((haikai) => (
-              <article key={(haikai as any).id || haikai.date} style={{ paddingBottom: "3rem", borderBottom: "1px solid var(--light-gray)" }}>
-                <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "1.2rem" }}>
+              <article key={(haikai as any).id || haikai.date} style={{ paddingBottom: "2rem", borderBottom: "1px solid var(--light-gray)" }}>
+                <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.8rem" }}>
                   {formatDate(haikai.date)}
                 </p>
                 <HaikaiCard pt={haikai.pt} en={haikai.en} es={haikai.es} lang={lang} size="small" />

@@ -33,11 +33,11 @@ export default function Home() {
         justifyContent: "center",
         maxWidth: "480px",
         margin: "0 auto",
-        padding: "4rem 2rem",
+        padding: "2rem 2rem",
       }}
     >
-      <header style={{ marginBottom: "5rem" }}>
-        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "0.5rem" }}>
+      <header style={{ marginBottom: "2.5rem" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "0.4rem" }}>
           <LangSelector onChange={setLang} />
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -51,23 +51,23 @@ export default function Home() {
       </header>
 
       <article style={{ flex: 1 }}>
-        <p style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "2.5rem", fontWeight: 400 }}>
+        <p style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "1.5rem", fontWeight: 400 }}>
           {today ? formatDate(today) : ""}
         </p>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "3.5rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
           {todayHaikais.map((haikai, i) => (
             <div key={(haikai as any).id || i}>
               <HaikaiCard pt={haikai.pt} en={haikai.en} es={haikai.es} lang={lang} size="large" />
               {i < todayHaikais.length - 1 && (
-                <div style={{ marginTop: "3.5rem", borderTop: "1px solid var(--light-gray)" }} />
+                <div style={{ marginTop: "2.5rem", borderTop: "1px solid var(--light-gray)" }} />
               )}
             </div>
           ))}
         </div>
       </article>
 
-      <footer style={{ marginTop: "5rem", borderTop: "1px solid var(--light-gray)", paddingTop: "1.5rem", fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--gray)" }}>
+      <footer style={{ marginTop: "2.5rem", borderTop: "1px solid var(--light-gray)", paddingTop: "1rem", fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--gray)" }}>
         um poema todo dia
       </footer>
     </main>
