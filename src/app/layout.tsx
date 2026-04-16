@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -25,14 +26,7 @@ export const metadata: Metadata = {
     siteName: "três linhas",
     title: "três linhas — um haikai todo dia",
     description: "Um haikai novo todo dia, em português, inglês e espanhol.",
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "três linhas",
-      },
-    ],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "três linhas" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -40,27 +34,17 @@ export const metadata: Metadata = {
     description: "Um haikai novo todo dia, em português, inglês e espanhol.",
     images: ["/og.png"],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-    },
-  },
-  alternates: {
-    canonical: "https://treslinhas.com.br",
-  },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+  alternates: { canonical: "https://treslinhas.com.br" },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <body className={cormorant.variable}>{children}</body>
+      <body className={cormorant.variable}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
