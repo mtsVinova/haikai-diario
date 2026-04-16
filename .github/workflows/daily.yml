@@ -2,8 +2,8 @@ name: Gerar haikai diário
 
 on:
   schedule:
-    - cron: "0 3 * * *"   # meia-noite horário de Brasília (UTC-3)
-    - cron: "0 15 * * *"  # meio-dia horário de Brasília (UTC-3)
+    - cron: "0 2 * * *"   # meia-noite horário de Brasília (UTC-3)
+    - cron: "0 14 * * *"  # meio-dia horário de Brasília (UTC-3)
   workflow_dispatch:
 
 jobs:

@@ -17,7 +17,7 @@ export default function HaikaiCard({ pt, en, es, lang, size = "large" }: Props) 
   return (
     <div
       style={{
-        fontSize: size === "large" ? "1.7rem" : "1.2rem",
+        fontSize: size === "large" ? "1.35rem" : "1.1rem",
         fontWeight: 300,
         fontStyle: "italic",
         lineHeight: 1.9,
