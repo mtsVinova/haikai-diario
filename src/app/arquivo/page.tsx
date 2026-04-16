@@ -59,7 +59,7 @@ export default function Arquivo() {
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
             {grouped[groupKey].map((haikai) => (
-              <article key={haikai.date} style={{ paddingBottom: "3rem", borderBottom: "1px solid var(--light-gray)" }}>
+              <article key={(haikai as any).id || haikai.date} style={{ paddingBottom: "3rem", borderBottom: "1px solid var(--light-gray)" }}>
                 <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "1.2rem" }}>
                   {formatDate(haikai.date)}
                 </p>

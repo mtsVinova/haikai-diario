@@ -31,13 +31,6 @@ RECURSOS FAVORITOS
 - A última linha muda o sentido das anteriores
 - Comparações inesperadas mas imediatas
 
-EXEMPLOS DO ESTILO (não copie, inspire-se):
-"uma risada familiar ao longe / e a angústia do dia / se desfaz num instante"
-"a noite / ilumina / o dia"
-"sexta-feira / sábado / segunda"
-"louça suja / louça limpa / louça suja"
-"estou triste / porque ontem fui feliz / nada mais natural"
-
 IMPORTANTE — VARIAÇÃO
 - Nunca repita imagens, objetos ou temas usados nos haikais recentes informados pelo usuário
 - Varie entre os temas disponíveis: natureza, amor, escrita, cotidiano, tempo, paradoxo
@@ -63,13 +56,10 @@ async function generateHaikai() {
     haikais = JSON.parse(raw);
   }
 
-  const today = new Date().toISOString().split("T")[0];
-
-  const alreadyExists = haikais.some((h) => h.date === today);
-  if (alreadyExists) {
-    console.log(`Haikai de ${today} já existe. Nada a fazer.`);
-    return;
-  }
+  // ID único por chamada: data + timestamp completo
+  const now = new Date();
+  const date = now.toISOString().split("T")[0];
+  const id = now.toISOString().replace(/[:.]/g, "-");
 
   const recent = haikais.slice(0, 5);
   const recentText =
@@ -92,7 +82,7 @@ async function generateHaikai() {
       messages: [
         {
           role: "user",
-          content: `${recentText}\n\nAgora gere o haikai de hoje (${today}), diferente de todos os acima.`,
+          content: `${recentText}\n\nAgora gere o haikai de hoje (${date}), diferente de todos os acima.`,
         },
       ],
     }),
@@ -114,10 +104,10 @@ async function generateHaikai() {
     parsed = JSON.parse(match[0]);
   }
 
-  haikais.unshift({ date: today, ...parsed });
+  haikais.unshift({ id, date, ...parsed });
 
   fs.writeFileSync(dataPath, JSON.stringify(haikais, null, 2), "utf-8");
-  console.log(`Haikai de ${today} gerado com sucesso.`);
+  console.log(`Haikai ${id} gerado com sucesso.`);
   console.log("PT:", parsed.pt);
 }
 

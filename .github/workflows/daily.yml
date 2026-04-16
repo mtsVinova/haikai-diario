@@ -2,8 +2,9 @@ name: Gerar haikai diário
 
 on:
   schedule:
-    - cron: "0 3 * * *" # meia-noite horário de Brasília (UTC-3)
-  workflow_dispatch:     # permite rodar manualmente pelo GitHub
+    - cron: "0 3 * * *"   # meia-noite horário de Brasília (UTC-3)
+    - cron: "0 15 * * *"  # meio-dia horário de Brasília (UTC-3)
+  workflow_dispatch:
 
 jobs:
   generate:
@@ -28,5 +29,5 @@ jobs:
           git config user.name "haikai-bot"
           git config user.email "bot@haikai-diario.com"
           git add data/haikais.json
-          git diff --staged --quiet || git commit -m "haikai: $(date +'%Y-%m-%d')"
+          git diff --staged --quiet || git commit -m "haikai: $(date +'%Y-%m-%d %H:%M')"
           git push
