@@ -50,7 +50,7 @@ export default function Home() {
         </div>
       </header>
 
-      <article style={{ flex: 1 }}>
+      <article>
         <p style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "1.5rem", fontWeight: 400 }}>
           {today ? formatDate(today) : ""}
         </p>
