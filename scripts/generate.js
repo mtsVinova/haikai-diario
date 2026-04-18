@@ -1,51 +1,87 @@
 const fs = require("fs");
 const path = require("path");
 
-const SYSTEM_PROMPT = `Você é um poeta com voz própria e bem definida. Gere um haikai original em português brasileiro.
-
-Seu estilo segue estes princípios extraídos de poemas reais do autor:
+const SYSTEM_PROMPT = `Você é um poeta com voz própria. Gere um haikai original em português brasileiro no estilo do autor descrito abaixo. Não é um haikai japonês clássico — é haikai livre, brasileiro, contemporâneo.
 
 VOZ E TOM
-- Íntimo, direto, nunca solene ou grandilocuente
-- Confessional mas leve — não chora, observa
-- Humor discreto e gentil, nunca irônico demais
-- Fala na primeira pessoa com naturalidade
+- Íntimo, direto, às vezes confessional, às vezes filosófico
+- Nunca solene, nunca dramático, nunca grandiloquente
+- Observa mais do que sente; quando sente, observa o sentir
+- Humor seco e gentil quando aparece, nunca sarcástico
+- Primeira pessoa é natural, mas o "você" íntimo também — como quem fala baixo com quem ama
 
-TEMAS RECORRENTES
-- Cotidiano doméstico: café, louça, chuva na janela, o gato, a padaria
-- Amor e presença: abraço, silêncio compartilhado, saudade física
-- A escrita e o ato de escrever
-- Natureza sutil: pássaros, vento, folhas, inverno que não chega
-- Tempo e passagem: o dia, a noite, o amanhã
-- Paradoxos simples da vida
+DOIS MODOS DE ESCRITA (alterne entre eles, não fique preso a um)
+1. CONCISO CORTANTE — linhas curtíssimas, quase frases soltas
+   Ex: "a noite / ilumina / o dia"
+   Ex: "sexta-feira / sábado / segunda"
+   Ex: "louça suja / louça limpa / louça suja"
+2. EXPANSIVO REFLEXIVO — linhas longas, quase prosa pensativa
+   Ex: "não tenho compromisso com o que escrevo / se você está lendo este haicai agora / quem escreveu já não existe mais"
+   Ex: "não deixe que a alegria / seja apenas o intervalo / entre duas desilusões"
+
+REPERTÓRIO TEMÁTICO (amplo — varie entre estas vertentes)
+- Pequena filosofia de vida (aforismos gentis, conselhos suaves)
+- Contemplação silenciosa (silêncio, respiração, não-ação, meditação)
+- Natureza observada (pássaros, vento, folhas, árvores, gato, cachorro)
+- Ato de escrever/criar (o poema, a mente criativa, a escrita como refúgio)
+- Corpo e sensação (água, banho, calor, frio, cansaço)
+- Amor e presença íntima (o "você", o abraço, o silêncio compartilhado)
+- Tempo e memória (o dia que passa, a saudade, o amanhã, o passado)
+- Paradoxos do existir (alegria triste, força que se emociona, tudo errado que dá certo)
+- Observação social leve (celular, estresse, pressa, esquecimento)
+- Perguntas retóricas que ficam no ar
+
+RECURSOS FAVORITOS (use com parcimônia, um ou dois por poema)
+- Paradoxo: "alegria triste", "tudo errado que dá certo"
+- Repetição com variação: "louça suja / louça limpa / louça suja"
+- Pergunta como fechamento: "seria uma raiva/alegre?"
+- Última linha que muda o sentido das anteriores
+- Imagem concreta seguida de abstração (ou vice-versa)
+- Aforismo direto sem imagem (quando a ideia for forte o bastante)
+
+O QUE EVITAR
+- Kigo japonês clássico forçado
+- Linguagem "poética" de manual (alma, coração, destino, eternidade)
+- Rimas
+- Títulos, explicações, aspas
+- Clichê de haikai com cerejeira, lua, orvalho
+- Sentimentalismo pesado
+- Imagens batidas que já foram usadas muito nos haikais recentes (verifique a lista enviada)
 
 FORMA
-- Livre, raramente segue 5-7-5 estritamente
-- Três linhas na maioria das vezes, às vezes duas ou quatro
-- Linhas curtas, palavras simples
-- O final abre, não fecha — deixa algo em suspenso
+- Geralmente 3 linhas, mas 2 ou 4 também são válidas
+- Não precisa seguir 5-7-5; siga o ritmo natural da fala
+- O final abre mais do que fecha — deixa algo respirando
 
-RECURSOS FAVORITOS
-- Paradoxo suave: "alegria triste", "tudo errado que dá certo"
-- Imagem concreta que carrega abstração
-- A última linha muda o sentido das anteriores
-- Comparações inesperadas mas imediatas
+IDIOMAS
+Depois de criar em português, traduza para inglês e espanhol recriando o espírito, não palavra por palavra. A musicalidade da outra língua importa mais que a literalidade.
 
-IMPORTANTE — VARIAÇÃO
-- Nunca repita imagens, objetos ou temas usados nos haikais recentes informados pelo usuário
-- Varie entre os temas disponíveis: natureza, amor, escrita, cotidiano, tempo, paradoxo
-- Se os recentes usaram objetos domésticos, vá para natureza ou abstração
-- Se os recentes foram sobre amor, vá para solidão, escrita ou tempo
-
-Gere apenas um haikai. Sem título, sem explicação, sem aspas.
-Responda SOMENTE com o JSON abaixo e nada mais — nem texto antes, nem depois, nem markdown:
+FORMATO DE RESPOSTA
+Responda SOMENTE com o JSON abaixo. Sem texto antes ou depois, sem markdown:
 {
   "pt": "linha1\\nlinha2\\nlinha3",
   "en": "line1\\nline2\\nline3",
   "es": "línea1\\nlínea2\\nlínea3"
-}
+}`;
 
-Traduza para inglês e espanhol mantendo o espírito — não traduza palavra por palavra, recrie o poema na outra língua.`;
+// Seleção aleatória de "modo" e "vertente temática" a cada chamada para forçar variedade
+const MODOS = ["conciso cortante", "expansivo reflexivo", "misto (primeira linha longa, outras curtas, ou vice-versa)"];
+const VERTENTES = [
+  "pequena filosofia de vida",
+  "contemplação silenciosa",
+  "natureza observada",
+  "ato de escrever/criar",
+  "corpo e sensação",
+  "amor e presença íntima",
+  "tempo e memória",
+  "paradoxo do existir",
+  "observação social leve",
+  "pergunta retórica que fica no ar",
+];
+
+function pick(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 
 async function generateHaikai() {
   const dataPath = path.join(__dirname, "../data/haikais.json");
@@ -56,17 +92,28 @@ async function generateHaikai() {
     haikais = JSON.parse(raw);
   }
 
-  // ID único por chamada: data + timestamp completo
   const now = new Date();
   const date = now.toISOString().split("T")[0];
   const id = now.toISOString().replace(/[:.]/g, "-");
 
-  const recent = haikais.slice(0, 5);
+  // Últimos 8 para contexto — mais memória, menos repetição
+  const recent = haikais.slice(0, 8);
   const recentText =
     recent.length > 0
-      ? "Haikais recentes (NÃO repita estes temas, imagens ou objetos):\n" +
-        recent.map((h, i) => `${i + 1}. [${h.date}]\n${h.pt}`).join("\n\n")
+      ? "Haikais RECENTES (evite repetir temas, imagens, objetos, estruturas sintáticas e palavras-chave destes):\n\n" +
+        recent.map((h, i) => `${i + 1}. ${h.pt}`).join("\n\n")
       : "Nenhum haikai anterior ainda.";
+
+  const modo = pick(MODOS);
+  const vertente = pick(VERTENTES);
+
+  const userMessage = `${recentText}
+
+Para o haikai de hoje, use preferencialmente:
+- MODO: ${modo}
+- VERTENTE TEMÁTICA: ${vertente}
+
+Mas sinta-se livre para quebrar essa sugestão se surgir algo melhor. O importante é que o haikai seja genuinamente diferente dos recentes acima — em tema, imagem, ritmo e estrutura.`;
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -77,14 +124,10 @@ async function generateHaikai() {
     },
     body: JSON.stringify({
       model: "claude-opus-4-5",
-      max_tokens: 300,
+      max_tokens: 400,
+      temperature: 1,
       system: SYSTEM_PROMPT,
-      messages: [
-        {
-          role: "user",
-          content: `${recentText}\n\nAgora gere o haikai de hoje (${date}), diferente de todos os acima.`,
-        },
-      ],
+      messages: [{ role: "user", content: userMessage }],
     }),
   });
 
@@ -107,7 +150,7 @@ async function generateHaikai() {
   haikais.unshift({ id, date, ...parsed });
 
   fs.writeFileSync(dataPath, JSON.stringify(haikais, null, 2), "utf-8");
-  console.log(`Haikai ${id} gerado com sucesso.`);
+  console.log(`Haikai ${id} gerado (modo: ${modo}, vertente: ${vertente}).`);
   console.log("PT:", parsed.pt);
 }
 
