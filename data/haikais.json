@@ -1,18 +1,66 @@
 [
   {
-    "id": "2026-04-18T14-36-03-943Z",
+    "id": "2026-04-21T15-06-17-178Z",
+    "date": "2026-04-21",
+    "pt": "o problema não é errar\né fingir\nque acertou",
+    "en": "the problem isn't failing\nit's pretending\nyou didn't",
+    "es": "el problema no es errar\nes fingir\nque acertaste",
+    "number": 18
+  },
+  {
+    "id": "2026-04-21T04-47-59-816Z",
+    "date": "2026-04-21",
+    "pt": "teu ombro\nmeu silêncio\ncabe",
+    "en": "your shoulder\nmy silence\nfits",
+    "es": "tu hombro\nmi silencio\ncabe",
+    "number": 17
+  },
+  {
+    "id": "2026-04-20T15-11-55-700Z",
+    "date": "2026-04-20",
+    "pt": "se a gente soubesse\no que está perdendo\nperderia igual?",
+    "en": "if we knew\nwhat we were losing\nwould we lose it anyway?",
+    "es": "si supiéramos\nlo que estamos perdiendo\n¿lo perderíamos igual?",
+    "number": 16
+  },
+  {
+    "id": "2026-04-20T04-57-25-744Z",
+    "date": "2026-04-20",
+    "pt": "respiro fundo\ne descubro que não estava\nrespirando",
+    "en": "I breathe deep\nand discover I wasn't\nbreathing",
+    "es": "respiro hondo\ny descubro que no estaba\nrespirando",
+    "number": 15
+  },
+  {
+    "id": "2026-04-19T14-36-10-911Z",
+    "date": "2026-04-19",
+    "pt": "às vezes a coisa mais corajosa\né ficar parado enquanto tudo\npede que você corra",
+    "en": "sometimes the bravest thing\nis standing still while everything\nasks you to run",
+    "es": "a veces lo más valiente\nes quedarse quieto mientras todo\nte pide que corras",
+    "number": 14
+  },
+  {
+    "id": "2026-04-19T04-50-14-711Z",
+    "date": "2026-04-19",
+    "pt": "guardei tantas coisas pra depois\nque o depois virou um lugar\nonde eu nunca morei",
+    "en": "i saved so many things for later\nthat later became a place\nwhere i never lived",
+    "es": "guardé tantas cosas para después\nque el después se volvió un lugar\ndonde nunca viví",
+    "number": 13
+  },
+  {
+    "id": "2026-04-18T16-21-40-835Z",
     "date": "2026-04-18",
-    "pt": "a chuva parou\nmas ficou o cheiro dela\nno meu casaco",
-    "en": "the rain has stopped\nbut left its smell behind\non my old coat",
-    "es": "la lluvia paró\npero dejó su olor\nen mi abrigo",
+    "pt": "notificação\nnotificação\nsilêncio",
+    "en": "notification\nnotification\nsilence",
+    "es": "notificación\nnotificación\nsilencio",
     "number": 12
   },
   {
-    "id": "2026-04-18T04-31-49-360Z",
+    "id": "2026-04-18T16-20-26-151Z",
     "date": "2026-04-18",
-    "pt": "o café esfriou\nenquanto eu decidia\nse era feliz",
-    "en": "the coffee went cold\nwhile I was deciding\nif I was happy",
-    "es": "el café se enfrió\nmientras yo decidía\nsi era feliz",
+    "pt": "você fala dormindo\ne eu fico acordado tentando\ndecifrar o idioma",
+    "en": "you talk in your sleep\nand I stay awake trying\nto learn the language",
+    "es": "hablas dormida\ny yo sigo despierto intentando\ndescifrar el idioma",
     "number": 11
   },
   {
