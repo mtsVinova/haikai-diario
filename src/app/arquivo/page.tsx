@@ -60,8 +60,11 @@ export default function Arquivo() {
           <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
             {grouped[groupKey].map((haikai) => (
               <article key={(haikai as any).id || haikai.date} style={{ paddingBottom: "2rem", borderBottom: "1px solid var(--light-gray)" }}>
-                <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.8rem" }}>
+                <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.3rem" }}>
                   {formatDate(haikai.date)}
+                </p>
+                <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.8rem" }}>
+                  {(haikai as any).number ? `${(haikai as any).number}.` : ""}
                 </p>
                 <HaikaiCard pt={haikai.pt} en={haikai.en} es={haikai.es} lang={lang} size="small" />
               </article>

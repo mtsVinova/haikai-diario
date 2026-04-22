@@ -58,6 +58,9 @@ export default function Home() {
         <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
           {todayHaikais.map((haikai, i) => (
             <div key={(haikai as any).id || i}>
+              <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.8rem" }}>
+                {(haikai as any).number ? `${(haikai as any).number}.` : ""}
+              </p>
               <HaikaiCard pt={haikai.pt} en={haikai.en} es={haikai.es} lang={lang} size="large" />
               {i < todayHaikais.length - 1 && (
                 <div style={{ marginTop: "2.5rem", borderTop: "1px solid var(--light-gray)" }} />

@@ -64,7 +64,6 @@ Responda SOMENTE com o JSON abaixo. Sem texto antes ou depois, sem markdown:
   "es": "línea1\\nlínea2\\nlínea3"
 }`;
 
-// Seleção aleatória de "modo" e "vertente temática" a cada chamada para forçar variedade
 const MODOS = ["conciso cortante", "expansivo reflexivo", "misto (primeira linha longa, outras curtas, ou vice-versa)"];
 const VERTENTES = [
   "pequena filosofia de vida",
@@ -96,7 +95,10 @@ async function generateHaikai() {
   const date = now.toISOString().split("T")[0];
   const id = now.toISOString().replace(/[:.]/g, "-");
 
-  // Últimos 8 para contexto — mais memória, menos repetição
+  // Calcula o próximo número sequencial
+  const maxNumber = haikais.reduce((max, h) => Math.max(max, h.number || 0), 0);
+  const number = maxNumber + 1;
+
   const recent = haikais.slice(0, 8);
   const recentText =
     recent.length > 0
@@ -147,10 +149,10 @@ Mas sinta-se livre para quebrar essa sugestão se surgir algo melhor. O importan
     parsed = JSON.parse(match[0]);
   }
 
-  haikais.unshift({ id, date, ...parsed });
+  haikais.unshift({ id, date, number, ...parsed });
 
   fs.writeFileSync(dataPath, JSON.stringify(haikais, null, 2), "utf-8");
-  console.log(`Haikai ${id} gerado (modo: ${modo}, vertente: ${vertente}).`);
+  console.log(`Haikai #${number} (${id}) gerado (modo: ${modo}, vertente: ${vertente}).`);
   console.log("PT:", parsed.pt);
 }
 

@@ -4,77 +4,89 @@
     "date": "2026-04-18",
     "pt": "a chuva parou\nmas ficou o cheiro dela\nno meu casaco",
     "en": "the rain has stopped\nbut left its smell behind\non my old coat",
-    "es": "la lluvia paró\npero dejó su olor\nen mi abrigo"
+    "es": "la lluvia paró\npero dejó su olor\nen mi abrigo",
+    "number": 12
   },
   {
     "id": "2026-04-18T04-31-49-360Z",
     "date": "2026-04-18",
     "pt": "o café esfriou\nenquanto eu decidia\nse era feliz",
     "en": "the coffee went cold\nwhile I was deciding\nif I was happy",
-    "es": "el café se enfrió\nmientras yo decidía\nsi era feliz"
+    "es": "el café se enfrió\nmientras yo decidía\nsi era feliz",
+    "number": 11
   },
   {
     "id": "2026-04-17T14-49-07-073Z",
     "date": "2026-04-17",
     "pt": "escrevo um verso\ne apago — o poema\njá era outro",
     "en": "I write a line\nand erase it — the poem\nwas already another",
-    "es": "escribo un verso\ny lo borro — el poema\nya era otro"
+    "es": "escribo un verso\ny lo borro — el poema\nya era otro",
+    "number": 10
   },
   {
     "id": "2026-04-17T04-48-34-625Z",
     "date": "2026-04-17",
     "pt": "o gato dorme\nno exato lugar do sol\neu procuro o meu",
     "en": "the cat sleeps\nin the exact spot of sun\nI search for mine",
-    "es": "el gato duerme\njusto donde cae el sol\nyo busco el mío"
+    "es": "el gato duerme\njusto donde cae el sol\nyo busco el mío",
+    "number": 9
   },
   {
     "id": "2026-04-16T16-15-43-494Z",
     "date": "2026-04-16",
     "pt": "lavo a louça devagar\npensando em você\na água esfria",
     "en": "washing dishes slowly\nthinking of you\nthe water grows cold",
-    "es": "lavo los platos despacio\npensando en ti\nel agua se enfría"
+    "es": "lavo los platos despacio\npensando en ti\nel agua se enfría",
+    "number": 8
   },
   {
     "id": "2026-04-16T05-25-25-461Z",
     "date": "2026-04-16",
     "pt": "dobro a esquina\ne o vento traz\nnotícias de lugar nenhum",
     "en": "I turn the corner\nand the wind brings\nnews from nowhere",
-    "es": "doblo la esquina\ny el viento trae\nnoticias de ningún lugar"
+    "es": "doblo la esquina\ny el viento trae\nnoticias de ningún lugar",
+    "number": 7
   },
   {
     "date": "2026-04-15",
     "pt": "acordo cedo demais\no silêncio ainda é\nda noite anterior",
     "en": "I wake too early\nthe silence still belongs\nto last night",
-    "es": "despierto muy temprano\nel silencio aún pertenece\na la noche anterior"
+    "es": "despierto muy temprano\nel silencio aún pertenece\na la noche anterior",
+    "number": 6
   },
   {
     "date": "2026-04-14",
     "pt": "amanhã eu resolvo\namanhã eu resolvo\namanhã",
     "en": "tomorrow I'll fix it\ntomorrow I'll fix it\ntomorrow",
-    "es": "mañana lo resuelvo\nmañana lo resuelvo\nmañana"
+    "es": "mañana lo resuelvo\nmañana lo resuelvo\nmañana",
+    "number": 5
   },
   {
     "date": "2026-04-13",
     "pt": "escrevo um verso\napago\nera isso mesmo",
     "en": "I write a line\ndelete it\nthat was it",
-    "es": "escribo un verso\nlo borro\nera eso mismo"
+    "es": "escribo un verso\nlo borro\nera eso mismo",
+    "number": 4
   },
   {
     "date": "2026-04-12",
     "pt": "o gato dorme\nno único raio de sol\nque sobrou da tarde",
     "en": "the cat sleeps\nin the only ray of sun\nleft from the afternoon",
-    "es": "el gato duerme\nen el único rayo de sol\nque quedó de la tarde"
+    "es": "el gato duerme\nen el único rayo de sol\nque quedó de la tarde",
+    "number": 3
   },
   {
     "date": "2026-04-11",
     "pt": "a chuva parou\nmas o cheiro dela\nainda me acompanha",
     "en": "the rain has stopped\nbut its scent\nstill walks with me",
-    "es": "la lluvia cesó\npero su olor\naún me acompaña"
+    "es": "la lluvia cesó\npero su olor\naún me acompaña",
+    "number": 2
   },
   {
     "date": "2026-04-10",
     "pt": "o café esfriou\nenquanto eu pensava em você\nmas ainda serve",
     "en": "the coffee went cold\nwhile I was thinking of you\nbut it still works",
-    "es": "el café se enfrió\nmientras pensaba en ti\npero aún sirve"
+    "es": "el café se enfrió\nmientras pensaba en ti\npero aún sirve",
+    "number": 1
   }
 ]
