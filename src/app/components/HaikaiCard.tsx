@@ -1,17 +1,16 @@
 "use client";
-
-type Lang = "pt" | "en" | "es";
+import { useLang } from "./LangProvider";
 
 interface Props {
   pt: string;
   en: string;
   es: string;
-  lang: Lang;
   size?: "large" | "small";
 }
 
-export default function HaikaiCard({ pt, en, es, lang, size = "large" }: Props) {
-  const texts: Record<Lang, string> = { pt, en, es };
+export default function HaikaiCard({ pt, en, es, size = "large" }: Props) {
+  const lang = useLang();
+  const texts: Record<string, string> = { pt, en, es };
   const lines = texts[lang].split("\n");
 
   return (

@@ -1,15 +1,14 @@
-"use client";
-import { useState } from "react";
 import Link from "next/link";
 import haikais from "../../../data/haikais.json";
 import HaikaiCard from "../components/HaikaiCard";
-import LangSelector from "../components/LangSelector";
+import LangProvider from "../components/LangProvider";
 
-type Lang = "pt" | "en" | "es";
+export const metadata = {
+  title: "arquivo — todos os haikais",
+  description: "Arquivo completo com todos os haikais publicados no três linhas.",
+};
 
 export default function Arquivo() {
-  const [lang, setLang] = useState<Lang>("pt");
-
   const formatDate = (dateStr: string) => {
     const [year, month, day] = dateStr.split("-").map(Number);
     const date = new Date(year, month - 1, day);
@@ -38,40 +37,39 @@ export default function Arquivo() {
 
   return (
     <main style={{ maxWidth: "560px", margin: "0 auto", padding: "2rem 2rem" }}>
-      <header style={{ marginBottom: "2.5rem" }}>
-        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "0.4rem" }}>
-          <LangSelector onChange={setLang} />
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-          <Link href="/" style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)" }}>
-            ← hoje
-          </Link>
-          <span style={{ fontSize: "0.8rem", letterSpacing: "0.15em", color: "var(--gray)" }}>
-            arquivo
-          </span>
-        </div>
-      </header>
-
-      {sortedGroups.map((groupKey) => (
-        <section key={groupKey} style={{ marginBottom: "2.5rem" }}>
-          <h2 style={{ fontSize: "0.7rem", letterSpacing: "0.18em", color: "var(--gray)", fontWeight: 400, marginBottom: "1.5rem", textTransform: "uppercase" }}>
-            {monthLabel(groupKey)}
-          </h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-            {grouped[groupKey].map((haikai) => (
-              <article key={(haikai as any).id || haikai.date} style={{ paddingBottom: "2rem", borderBottom: "1px solid var(--light-gray)" }}>
-                <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.3rem" }}>
-                  {formatDate(haikai.date)}
-                </p>
-                <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.8rem" }}>
-                  {(haikai as any).number ? `${(haikai as any).number}.` : ""}
-                </p>
-                <HaikaiCard pt={haikai.pt} en={haikai.en} es={haikai.es} lang={lang} size="small" />
-              </article>
-            ))}
+      <LangProvider>
+        <header style={{ marginBottom: "2.5rem" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+            <Link href="/" style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)" }}>
+              ← hoje
+            </Link>
+            <h1 style={{ fontSize: "0.8rem", letterSpacing: "0.15em", color: "var(--gray)", fontWeight: 400, margin: 0 }}>
+              arquivo
+            </h1>
           </div>
-        </section>
-      ))}
+        </header>
+
+        {sortedGroups.map((groupKey) => (
+          <section key={groupKey} style={{ marginBottom: "2.5rem" }}>
+            <h2 style={{ fontSize: "0.7rem", letterSpacing: "0.18em", color: "var(--gray)", fontWeight: 400, marginBottom: "1.5rem", textTransform: "uppercase" }}>
+              {monthLabel(groupKey)}
+            </h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+              {grouped[groupKey].map((haikai) => (
+                <article key={(haikai as any).id || haikai.date} style={{ paddingBottom: "2rem", borderBottom: "1px solid var(--light-gray)" }}>
+                  <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.3rem" }}>
+                    {formatDate(haikai.date)}
+                  </p>
+                  <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.8rem" }}>
+                    {(haikai as any).number ? `${(haikai as any).number}.` : ""}
+                  </p>
+                  <HaikaiCard pt={haikai.pt} en={haikai.en} es={haikai.es} size="small" />
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
+      </LangProvider>
     </main>
   );
 }

@@ -13,32 +13,54 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL("https://treslinhas.com.br"),
   title: {
-    default: "três linhas — um haikai todo dia",
+    default: "três linhas | haikai novo todo dia em português, inglês e espanhol",
     template: "%s | três linhas",
   },
-  description: "Um haikai novo todo dia, em português, inglês e espanhol.",
-  keywords: ["haikai", "haiku", "poesia", "poema diário", "três linhas", "poesia brasileira"],
+  description:
+    "Um haikai em três linhas, novo todo dia, em português, inglês e espanhol. Poesia breve e contemporânea no formato do haiku japonês.",
+  keywords: [
+    "haikai",
+    "haiku",
+    "três linhas",
+    "poesia",
+    "haicai",
+    "poema",
+    "poema diário",
+    "poesia brasileira",
+    "haikai em português",
+    "poema curto",
+  ],
   authors: [{ name: "três linhas" }],
   openGraph: {
     type: "website",
     locale: "pt_BR",
     url: "https://treslinhas.com.br",
     siteName: "três linhas",
-    title: "três linhas — um haikai todo dia",
-    description: "Um haikai novo todo dia, em português, inglês e espanhol.",
+    title: "três linhas | haikai novo todo dia",
+    description:
+      "Um haikai em três linhas, novo todo dia, em português, inglês e espanhol.",
     images: [{ url: "/og.png", width: 1200, height: 630, alt: "três linhas" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "três linhas — um haikai todo dia",
-    description: "Um haikai novo todo dia, em português, inglês e espanhol.",
+    title: "três linhas | haikai novo todo dia",
+    description:
+      "Um haikai em três linhas, novo todo dia, em português, inglês e espanhol.",
     images: ["/og.png"],
   },
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
   alternates: { canonical: "https://treslinhas.com.br" },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="pt-BR">
       <body className={cormorant.variable}>

@@ -4,13 +4,6 @@ import haikais from "../../data/haikais.json";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://treslinhas.com.br";
 
-  const haikaiEntries = haikais.map((h) => ({
-    url: `${base}/arquivo`,
-    lastModified: new Date(h.date),
-    changeFrequency: "daily" as const,
-    priority: 0.7,
-  }));
-
   return [
     {
       url: base,
@@ -20,10 +13,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${base}/arquivo`,
-      lastModified: new Date(),
+      lastModified: haikais[0] ? new Date(haikais[0].date) : new Date(),
       changeFrequency: "daily",
       priority: 0.8,
     },
-    ...haikaiEntries,
+    {
+      url: `${base}/sobre`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }
