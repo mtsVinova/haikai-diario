@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import haikais from "../../data/haikais.json";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://treslinhas.com.br";
+  const base = "https://www.treslinhas.com.br";
 
   return [
     {
