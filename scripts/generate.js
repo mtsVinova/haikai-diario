@@ -46,7 +46,12 @@ O QUE EVITAR
 - Títulos, explicações, aspas
 - Clichê de haikai com cerejeira, lua, orvalho
 - Sentimentalismo pesado
-- Imagens batidas que já foram usadas muito nos haikais recentes (verifique a lista enviada)
+
+REGRAS RÍGIDAS DE NÃO-REPETIÇÃO
+- O haikai gerado NÃO PODE conter nenhuma das palavras-chave proibidas listadas pelo usuário
+- O haikai gerado NÃO PODE usar a mesma estrutura sintática usada nos últimos 5 haikais
+- O haikai gerado NÃO PODE tratar do mesmo tema central dos últimos 10 haikais
+- Se houver dúvida, escolha um caminho temático totalmente diferente
 
 FORMA
 - Geralmente 3 linhas, mas 2 ou 4 também são válidas
@@ -64,7 +69,12 @@ Responda SOMENTE com o JSON abaixo. Sem texto antes ou depois, sem markdown:
   "es": "línea1\\nlínea2\\nlínea3"
 }`;
 
-const MODOS = ["conciso cortante", "expansivo reflexivo", "misto (primeira linha longa, outras curtas, ou vice-versa)"];
+const MODOS = [
+  "conciso cortante",
+  "expansivo reflexivo",
+  "misto (primeira linha longa, outras curtas, ou vice-versa)",
+];
+
 const VERTENTES = [
   "pequena filosofia de vida",
   "contemplação silenciosa",
@@ -78,8 +88,80 @@ const VERTENTES = [
   "pergunta retórica que fica no ar",
 ];
 
+const ESTRUTURAS = [
+  "pergunta retórica",
+  "repetição com variação (ex: X / Y / X)",
+  "aforismo direto sem imagem",
+  "imagem concreta com virada na última linha",
+  "narrativa de gesto pequeno",
+  "comparação inesperada",
+  "afirmação dupla com paradoxo",
+];
+
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+const STOP_WORDS = new Set([
+  "a","o","e","de","do","da","dos","das","em","no","na","nos","nas",
+  "um","uma","uns","umas","para","pra","por","com","sem","mas","mais",
+  "que","se","ja","so","tao","muito","pouco","tudo","nada","algo",
+  "eu","tu","voce","ele","ela","nos","voces","eles","elas","me","te","lhe",
+  "meu","minha","seu","sua","nosso","nossa","teu","tua","dele","dela",
+  "ser","estar","ter","haver","ir","vir","fazer","ficar","poder","querer",
+  "foi","era","sera","sou","esta","estou","tem","tinha","teve",
+  "aqui","ali","la","onde","quando","como","porque","ainda","sempre","nunca",
+  "ao","aos","as","pelo","pela","pelos","pelas",
+  "quem","cujo","qual","quanto","todo","toda","todos","todas",
+  "este","esta","esse","essa","aquele","aquela","isto","isso","aquilo",
+  "tambem","entao","logo","depois","antes","agora","hoje","ontem","amanha",
+  "sim","nao","talvez","quase","apenas","mesmo","proprio","outro","outra",
+  "vai","vou","fica","sao","tao","cabe","fica","passa","pode","disse",
+]);
+
+function normalize(word) {
+  return word
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function extractKeywords(haikais) {
+  // Conta palavras de todos os últimos 15 haikais
+  const text15 = haikais.slice(0, 15).map((h) => h.pt).join(" ");
+  const words15 = (text15.match(/[a-záàâãéêíóôõúç]+/gi) || [])
+    .map((w) => w.toLowerCase());
+
+  const counts = {};
+  for (const w of words15) {
+    if (w.length < 3) continue;
+    if (STOP_WORDS.has(normalize(w))) continue;
+    counts[w] = (counts[w] || 0) + 1;
+  }
+
+  // Palavras que aparecem 2+ vezes em 15 haikais (muletas)
+  const repeated = Object.entries(counts)
+    .filter(([_, c]) => c >= 2)
+    .map(([w]) => w);
+
+  // Todas as palavras "fortes" (substantivos/verbos com 4+ letras) dos últimos 5
+  const text5 = haikais.slice(0, 5).map((h) => h.pt).join(" ");
+  const recent5Words = (text5.match(/[a-záàâãéêíóôõúç]+/gi) || [])
+    .map((w) => w.toLowerCase())
+    .filter((w) => w.length >= 4 && !STOP_WORDS.has(normalize(w)));
+
+  return [...new Set([...repeated, ...recent5Words])].sort();
+}
+
+function detectStructure(pt) {
+  const lower = pt.toLowerCase();
+  const lines = pt.split("\n").map((l) => l.trim());
+  if (lower.includes("?")) return "pergunta retórica";
+  if (lines.length >= 3 && lines[0] === lines[lines.length - 1]) return "repetição com variação";
+  if (lines.length >= 3 && lines.filter((l) => l === lines[0]).length >= 2) return "repetição com variação";
+  if (/\bmas\b/.test(lower)) return "afirmação dupla com paradoxo";
+  if (/\bse\b/.test(lower) && lower.includes("?")) return "pergunta retórica";
+  return null;
 }
 
 async function generateHaikai() {
@@ -95,27 +177,44 @@ async function generateHaikai() {
   const date = now.toISOString().split("T")[0];
   const id = now.toISOString().replace(/[:.]/g, "-");
 
-  // Calcula o próximo número sequencial
   const maxNumber = haikais.reduce((max, h) => Math.max(max, h.number || 0), 0);
   const number = maxNumber + 1;
 
-  const recent = haikais.slice(0, 8);
+  const recent = haikais.slice(0, 20);
   const recentText =
     recent.length > 0
-      ? "Haikais RECENTES (evite repetir temas, imagens, objetos, estruturas sintáticas e palavras-chave destes):\n\n" +
+      ? "Últimos 20 haikais publicados (analise para NÃO repetir):\n\n" +
         recent.map((h, i) => `${i + 1}. ${h.pt}`).join("\n\n")
       : "Nenhum haikai anterior ainda.";
+
+  const blockedWords = extractKeywords(haikais);
+  const blockedText =
+    blockedWords.length > 0
+      ? `\nPALAVRAS-CHAVE PROIBIDAS (não use NENHUMA delas no haikai em português):\n${blockedWords.join(", ")}`
+      : "";
+
+  const recentStructures = recent
+    .slice(0, 5)
+    .map((h) => detectStructure(h.pt))
+    .filter(Boolean);
+
+  const availableEstruturas = ESTRUTURAS.filter((e) => !recentStructures.includes(e));
+  const estrutura = pick(availableEstruturas.length > 0 ? availableEstruturas : ESTRUTURAS);
 
   const modo = pick(MODOS);
   const vertente = pick(VERTENTES);
 
   const userMessage = `${recentText}
+${blockedText}
 
-Para o haikai de hoje, use preferencialmente:
+ESTRUTURAS já usadas nos últimos 5 (EVITE estas): ${recentStructures.length > 0 ? recentStructures.join(", ") : "nenhuma específica"}
+
+Para o haikai de hoje, use OBRIGATORIAMENTE:
 - MODO: ${modo}
 - VERTENTE TEMÁTICA: ${vertente}
+- ESTRUTURA: ${estrutura}
 
-Mas sinta-se livre para quebrar essa sugestão se surgir algo melhor. O importante é que o haikai seja genuinamente diferente dos recentes acima — em tema, imagem, ritmo e estrutura.`;
+O haikai deve ser genuinamente diferente dos anteriores em tema, vocabulário e ritmo. Se não conseguir cumprir as restrições com naturalidade, prefira um caminho mais inesperado a repetir o que já existe.`;
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -152,8 +251,12 @@ Mas sinta-se livre para quebrar essa sugestão se surgir algo melhor. O importan
   haikais.unshift({ id, date, number, ...parsed });
 
   fs.writeFileSync(dataPath, JSON.stringify(haikais, null, 2), "utf-8");
-  console.log(`Haikai #${number} (${id}) gerado (modo: ${modo}, vertente: ${vertente}).`);
-  console.log("PT:", parsed.pt);
+  console.log(`Haikai #${number} (${id}) gerado.`);
+  console.log(`  modo: ${modo}`);
+  console.log(`  vertente: ${vertente}`);
+  console.log(`  estrutura: ${estrutura}`);
+  console.log(`  palavras proibidas: ${blockedWords.length}`);
+  console.log(`PT: ${parsed.pt}`);
 }
 
 generateHaikai().catch((err) => {
