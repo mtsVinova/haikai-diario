@@ -13,8 +13,6 @@ VOZ E TOM
 DOIS MODOS DE ESCRITA (alterne entre eles, não fique preso a um)
 1. CONCISO CORTANTE — linhas curtíssimas, quase frases soltas
    Ex: "a noite / ilumina / o dia"
-   Ex: "sexta-feira / sábado / segunda"
-   Ex: "louça suja / louça limpa / louça suja"
 2. EXPANSIVO REFLEXIVO — linhas longas, quase prosa pensativa
    Ex: "não tenho compromisso com o que escrevo / se você está lendo este haicai agora / quem escreveu já não existe mais"
    Ex: "não deixe que a alegria / seja apenas o intervalo / entre duas desilusões"
