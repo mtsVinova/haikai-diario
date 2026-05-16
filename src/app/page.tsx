@@ -2,6 +2,7 @@ import Link from "next/link";
 import haikais from "../../data/haikais.json";
 import HaikaiCard from "./components/HaikaiCard";
 import LangProvider from "./components/LangProvider";
+import ApoieLink from "./components/ApoieLink";
 
 export default function Home() {
   const today = haikais[0]?.date;
@@ -51,7 +52,6 @@ export default function Home() {
           <p style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "1.5rem", fontWeight: 400 }}>
             {today ? formatDate(today) : ""}
           </p>
-
           <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
             {todayHaikais.map((haikai, i) => (
               <div key={(haikai as any).id || i}>
@@ -67,7 +67,9 @@ export default function Home() {
           </div>
         </article>
 
-        <footer style={{ marginTop: "2.5rem", borderTop: "1px solid var(--light-gray)", paddingTop: "1rem", fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--gray)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <ApoieLink />
+
+        <footer style={{ marginTop: "1.5rem", borderTop: "1px solid var(--light-gray)", paddingTop: "1rem", fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--gray)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span>um poema todo dia</span>
           <Link href="/rss.xml" style={{ color: "var(--gray)", opacity: 0.6 }} title="RSS feed">
             RSS

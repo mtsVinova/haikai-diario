@@ -2,6 +2,7 @@ import Link from "next/link";
 import haikais from "../../../data/haikais.json";
 import HaikaiCard from "../components/HaikaiCard";
 import LangProvider from "../components/LangProvider";
+import ApoieLink from "../components/ApoieLink";
 
 export const metadata = {
   title: "arquivo — todos os haikais",
@@ -69,6 +70,12 @@ export default function Arquivo() {
             </div>
           </section>
         ))}
+
+        <ApoieLink />
+
+        <footer style={{ marginTop: "1.5rem", borderTop: "1px solid var(--light-gray)", paddingTop: "1rem", fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--gray)" }}>
+          um poema todo dia
+        </footer>
       </LangProvider>
     </main>
   );
