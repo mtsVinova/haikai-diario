@@ -19,16 +19,8 @@ export const metadata: Metadata = {
   description:
     "Um haikai em três linhas, novo todo dia, em português, inglês e espanhol. Poesia breve e contemporânea no formato do haiku japonês.",
   keywords: [
-    "haikai",
-    "haiku",
-    "três linhas",
-    "poesia",
-    "haicai",
-    "poema",
-    "poema diário",
-    "poesia brasileira",
-    "haikai em português",
-    "poema curto",
+    "haikai", "haiku", "três linhas", "poesia", "haicai", "poema",
+    "poema diário", "poesia brasileira", "haikai em português", "poema curto",
   ],
   authors: [{ name: "três linhas" }],
   openGraph: {
@@ -37,32 +29,35 @@ export const metadata: Metadata = {
     url: "https://treslinhas.com.br",
     siteName: "três linhas",
     title: "três linhas | haikai novo todo dia",
-    description:
-      "Um haikai em três linhas, novo todo dia, em português, inglês e espanhol.",
+    description: "Um haikai em três linhas, novo todo dia, em português, inglês e espanhol.",
     images: [{ url: "/og.png", width: 1200, height: 630, alt: "três linhas" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "três linhas | haikai novo todo dia",
-    description:
-      "Um haikai em três linhas, novo todo dia, em português, inglês e espanhol.",
+    description: "Um haikai em três linhas, novo todo dia, em português, inglês e espanhol.",
     images: ["/og.png"],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+  alternates: {
+    canonical: "https://treslinhas.com.br",
+    types: {
+      "application/rss+xml": "https://treslinhas.com.br/rss.xml",
+    },
   },
-  alternates: { canonical: "https://treslinhas.com.br" },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
+      <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="três linhas — RSS"
+          href="https://treslinhas.com.br/rss.xml"
+        />
+      </head>
       <body className={cormorant.variable}>
         {children}
         <Analytics />

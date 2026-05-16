@@ -67,8 +67,11 @@ export default function Home() {
           </div>
         </article>
 
-        <footer style={{ marginTop: "2.5rem", borderTop: "1px solid var(--light-gray)", paddingTop: "1rem", fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--gray)" }}>
-          um poema todo dia
+        <footer style={{ marginTop: "2.5rem", borderTop: "1px solid var(--light-gray)", paddingTop: "1rem", fontSize: "0.7rem", letterSpacing: "0.08em", color: "var(--gray)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span>um poema todo dia</span>
+          <Link href="/rss.xml" style={{ color: "var(--gray)", opacity: 0.6 }} title="RSS feed">
+            RSS
+          </Link>
         </footer>
       </LangProvider>
     </main>
