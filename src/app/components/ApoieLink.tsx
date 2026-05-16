@@ -11,9 +11,9 @@ export default function ApoieLink() {
         style={{
           fontSize: "0.7rem",
           letterSpacing: "0.12em",
-          color: "var(--gray)",
+          color: "var(--black)",
           marginBottom: "0.6rem",
-          fontWeight: 400,
+          fontWeight: 700,
         }}
       >
         apoie o projeto
@@ -29,7 +29,7 @@ export default function ApoieLink() {
       >
         <em>infinito espaço imaginário</em> é a coleção de 100 haikais originais
         que serve de base para os poemas gerados aqui todo dia. Adquira o ebook
-        e conheça o trabalho que deu origem ao três linhas.
+        em PDF + EPUB e conheça o trabalho que deu origem ao três linhas.
       </p>
       <a
         href="https://pay.kiwify.com.br/N9S1PtV"
