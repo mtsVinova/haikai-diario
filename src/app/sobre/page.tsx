@@ -8,13 +8,7 @@ export const metadata = {
 
 export default function Sobre() {
   return (
-    <main
-      style={{
-        maxWidth: "560px",
-        margin: "0 auto",
-        padding: "2rem 2rem",
-      }}
-    >
+    <main style={{ maxWidth: "560px", margin: "0 auto", padding: "2rem 2rem" }}>
       <header style={{ marginBottom: "2.5rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
           <Link href="/" style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: "var(--gray)" }}>
@@ -26,13 +20,7 @@ export default function Sobre() {
         </div>
       </header>
 
-      <article
-        style={{
-          fontSize: "1.05rem",
-          lineHeight: 1.8,
-          color: "var(--black)",
-        }}
-      >
+      <article style={{ fontSize: "1.05rem", lineHeight: 1.8, color: "var(--black)" }}>
         <section style={{ marginBottom: "2.5rem" }}>
           <h2 style={{ fontSize: "1.5rem", fontWeight: 300, fontStyle: "italic", marginBottom: "1rem" }}>
             o projeto
@@ -48,7 +36,11 @@ export default function Sobre() {
             no momento em que você o lê.
           </p>
           <p>
-            Acesse o <Link href="/arquivo" style={{ borderBottom: "1px solid var(--gray)" }}>arquivo completo</Link> para ler todos os haikais já publicados.
+            Acesse o{" "}
+            <Link href="/arquivo" style={{ borderBottom: "1px solid var(--gray)" }}>
+              arquivo completo
+            </Link>{" "}
+            para ler todos os haikais já publicados.
           </p>
         </section>
 
@@ -87,7 +79,7 @@ export default function Sobre() {
           </p>
         </section>
 
-        <section>
+        <section style={{ marginBottom: "2.5rem" }}>
           <h2 style={{ fontSize: "1.5rem", fontWeight: 300, fontStyle: "italic", marginBottom: "1rem" }}>
             três idiomas
           </h2>
@@ -96,6 +88,21 @@ export default function Sobre() {
             <strong>espanhol</strong>. As traduções não são literais — são recriações,
             buscando preservar o espírito do poema em cada língua. Use os ícones de
             bandeira no topo para trocar o idioma.
+          </p>
+        </section>
+
+        <section>
+          <h2 style={{ fontSize: "1.5rem", fontWeight: 300, fontStyle: "italic", marginBottom: "1rem" }}>
+            contato
+          </h2>
+          <p>
+            Alexandre Matos<br />
+            <a
+              href="mailto:sitetreslinhas@gmail.com"
+              style={{ color: "var(--gray)", borderBottom: "1px solid var(--gray)" }}
+            >
+              sitetreslinhas@gmail.com
+            </a>
           </p>
         </section>
       </article>
