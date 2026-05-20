@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import haikais from "../../../data/haikais.json";
-import ApoieLink from "../../components/ApoieLink";
+import haikais from "../../../../data/haikais.json";
+import ApoieLink from "../../../components/ApoieLink";
 
 export async function generateStaticParams() {
   return haikais.map((h: any) => ({ id: String(h.number) }));
@@ -46,10 +46,7 @@ export default function HaikaiPage({ params }: { params: { id: string } }) {
     margin: 0,
   };
 
-  const linhaSecStyle = {
-    ...linhaStyle,
-    color: CINZA,
-  };
+  const linhaSecStyle = { ...linhaStyle, color: CINZA };
 
   return (
     <main style={{ maxWidth: "480px", margin: "0 auto", padding: "2rem 2rem" }}>
@@ -66,33 +63,31 @@ export default function HaikaiPage({ params }: { params: { id: string } }) {
 
       <article>
         <p style={{ fontSize: "0.75rem", letterSpacing: "0.1em", color: CINZA, marginBottom: "1.5rem" }}>
-          {formatDate(haikai.date)}
+          {formatDate(haikai!.date)}
         </p>
-
         <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: CINZA, marginBottom: "1.2rem" }}>
           {number}.
         </p>
 
         <div style={{ marginBottom: "1.5rem" }}>
           <span style={{ fontSize: "0.55rem", letterSpacing: "0.3em", color: CINZA_MUITO_CLARO, display: "block", marginBottom: "0.3rem" }}>PT</span>
-          {haikai.pt.split("\n").map((l, i) => <p key={i} style={linhaStyle}>{l}</p>)}
+          {haikai!.pt.split("\n").map((l, i) => <p key={i} style={linhaStyle}>{l}</p>)}
         </div>
 
         <div style={{ marginBottom: "1.5rem" }}>
           <span style={{ fontSize: "0.55rem", letterSpacing: "0.3em", color: CINZA_MUITO_CLARO, display: "block", marginBottom: "0.3rem" }}>EN</span>
-          {haikai.en.split("\n").map((l, i) => <p key={i} style={linhaSecStyle}>{l}</p>)}
+          {haikai!.en.split("\n").map((l, i) => <p key={i} style={linhaSecStyle}>{l}</p>)}
         </div>
 
         <div>
           <span style={{ fontSize: "0.55rem", letterSpacing: "0.3em", color: CINZA_MUITO_CLARO, display: "block", marginBottom: "0.3rem" }}>ES</span>
-          {haikai.es.split("\n").map((l, i) => <p key={i} style={linhaSecStyle}>{l}</p>)}
+          {haikai!.es.split("\n").map((l, i) => <p key={i} style={linhaSecStyle}>{l}</p>)}
         </div>
       </article>
 
-      {/* Navegação entre haikais */}
       <nav style={{ marginTop: "2.5rem", display: "flex", justifyContent: "space-between", borderTop: `1px solid ${CINZA_CLARO}`, paddingTop: "1rem" }}>
         {prev ? (
-          <Link href={`/haikai/${prev.number}`} style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: CINZA }}>
+          <Link href={`/haikai/${(prev as any).number}`} style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: CINZA }}>
             ← #{(prev as any).number}
           </Link>
         ) : <span />}
