@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import haikais from "../../../../data/haikais.json";
-import ApoieLink from "../../../components/ApoieLink";
+import ApoieLink from "../../components/ApoieLink";
 
 export async function generateStaticParams() {
   return haikais.map((h: any) => ({ id: String(h.number) }));
