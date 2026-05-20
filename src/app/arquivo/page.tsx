@@ -14,9 +14,7 @@ export default function Arquivo() {
     const [year, month, day] = dateStr.split("-").map(Number);
     const date = new Date(year, month - 1, day);
     return date.toLocaleDateString("pt-BR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
+      day: "numeric", month: "long", year: "numeric",
     });
   };
 
@@ -59,17 +57,25 @@ export default function Arquivo() {
                 {monthLabel(groupKey)}
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-                {grouped[groupKey].map((haikai) => (
-                  <article key={(haikai as any).id || haikai.date} style={{ paddingBottom: "2rem", borderBottom: "1px solid var(--light-gray)" }}>
-                    <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.3rem" }}>
-                      {formatDate(haikai.date)}
-                    </p>
-                    <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.8rem" }}>
-                      {(haikai as any).number ? `${(haikai as any).number}.` : ""}
-                    </p>
-                    <HaikaiCard pt={haikai.pt} en={haikai.en} es={haikai.es} size="small" />
-                  </article>
-                ))}
+                {grouped[groupKey].map((haikai) => {
+                  const number = (haikai as any).number;
+                  return (
+                    <article key={(haikai as any).id || haikai.date} style={{ paddingBottom: "2rem", borderBottom: "1px solid var(--light-gray)" }}>
+                      <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", marginBottom: "0.3rem" }}>
+                        {formatDate(haikai.date)}
+                      </p>
+                      {number && (
+                        <Link
+                          href={`/haikai/${number}`}
+                          style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "var(--gray)", display: "block", marginBottom: "0.8rem" }}
+                        >
+                          {number}.
+                        </Link>
+                      )}
+                      <HaikaiCard pt={haikai.pt} en={haikai.en} es={haikai.es} size="small" />
+                    </article>
+                  );
+                })}
               </div>
             </section>
           ))}
