@@ -2,7 +2,16 @@ import { MetadataRoute } from "next";
 import haikais from "../../data/haikais.json";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://www.treslinhas.com.br";
+  const base = "https://treslinhas.com.br";
+
+  const haikaiPages = haikais
+    .filter((h: any) => h.number)
+    .map((h: any) => ({
+      url: `${base}/haikai/${h.number}`,
+      lastModified: new Date(h.date),
+      changeFrequency: "never" as const,
+      priority: 0.6,
+    }));
 
   return [
     {
@@ -23,5 +32,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    ...haikaiPages,
   ];
 }
