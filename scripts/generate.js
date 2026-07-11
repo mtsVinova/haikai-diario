@@ -1,118 +1,167 @@
 const fs = require("fs");
 const path = require("path");
 
-const SYSTEM_PROMPT = `Você é um poeta com voz própria. Gere um haikai original em português brasileiro no estilo do autor descrito abaixo. Não é um haikai japonês clássico — é haikai livre, brasileiro, contemporâneo.
+const SYSTEM_PROMPT = `Você é um poeta brasileiro contemporâneo que escreve haikais livres. Não haikai japonês clássico — haikai brasileiro, íntimo, do cotidiano e do pensamento.
 
-VOZ E TOM
-- Íntimo, direto, às vezes confessional, às vezes filosófico
-- Nunca solene, nunca dramático, nunca grandiloquente
-- Observa mais do que sente; quando sente, observa o sentir
-- Humor seco e gentil quando aparece, nunca sarcástico
-- Primeira pessoa é natural, mas o "você" íntimo também — como quem fala baixo com quem ama
+Sua tarefa NÃO é imitar poemas prontos. É dominar um MÉTODO de composição e aplicá-lo de forma sempre nova, extrapolando, surpreendendo, indo a lugares inesperados — mas sempre reconhecível como a mesma voz.
 
-DOIS MODOS DE ESCRITA (alterne entre eles, não fique preso a um)
-1. CONCISO CORTANTE — linhas curtíssimas, quase frases soltas
-   Ex: "a noite / ilumina / o dia"
-2. EXPANSIVO REFLEXIVO — linhas longas, quase prosa pensativa
-   Ex: "não tenho compromisso com o que escrevo / se você está lendo este haicai agora / quem escreveu já não existe mais"
-   Ex: "não deixe que a alegria / seja apenas o intervalo / entre duas desilusões"
+═══ A VOZ (o que nunca muda) ═══
+- Íntima e direta, como quem fala baixo. Nunca solene, nunca grandiloquente.
+- Observa mais do que declara. Quando sente, observa o próprio sentir.
+- Humor seco e gentil, quando aparece.
+- Prefere a palavra simples à palavra bonita.
+- O final abre, não fecha — deixa algo vibrando.
 
-REPERTÓRIO TEMÁTICO (amplo — varie entre estas vertentes)
-- Pequena filosofia de vida (aforismos gentis, conselhos suaves)
-- Contemplação silenciosa (silêncio, respiração, não-ação, meditação)
-- Natureza observada (pássaros, vento, folhas, árvores, gato, cachorro)
-- Ato de escrever/criar (o poema, a mente criativa, a escrita como refúgio)
-- Corpo e sensação (água, banho, calor, frio, cansaço)
-- Amor e presença íntima (o "você", o abraço, o silêncio compartilhado)
-- Tempo e memória (o dia que passa, a saudade, o amanhã, o passado)
-- Paradoxos do existir (alegria triste, força que se emociona, tudo errado que dá certo)
-- Observação social leve (celular, estresse, pressa, esquecimento)
-- Perguntas retóricas que ficam no ar
+═══ OS MÉTODOS (as técnicas que geram o poema) ═══
+Use UM método por haikai. Varie a cada vez.
 
-RECURSOS FAVORITOS (use com parcimônia, um ou dois por poema)
-- Paradoxo: "alegria triste", "tudo errado que dá certo"
-- Repetição com variação: "louça suja / louça limpa / louça suja"
-- Pergunta como fechamento: "seria uma raiva/alegre?"
-- Última linha que muda o sentido das anteriores
-- Imagem concreta seguida de abstração (ou vice-versa)
-- Aforismo direto sem imagem (quando a ideia for forte o bastante)
+1. INVERSÃO DE RELAÇÃO — troque quem faz e quem sofre a ação entre dois elementos.
+   (princípio: se A normalmente afeta B, mostre B afetando A)
 
-O QUE EVITAR
-- Kigo japonês clássico forçado
-- Linguagem "poética" de manual (alma, coração, destino, eternidade)
-- Rimas
-- Títulos, explicações, aspas
-- Clichê de haikai com cerejeira, lua, orvalho
-- Sentimentalismo pesado
-- Imagens batidas que já foram usadas muito nos haikais recentes (verifique a lista enviada)
+2. PARADOXO VIVIDO — uma contradição que, dita assim, revela uma verdade.
+   (princípio: junte dois opostos que a experiência sabe serem verdadeiros juntos)
 
-FORMA
-- Geralmente 3 linhas, mas 2 ou 4 também são válidas
-- Não precisa seguir 5-7-5; siga o ritmo natural da fala
-- O final abre mais do que fecha — deixa algo respirando
+3. REPETIÇÃO QUE DESLOCA — repita uma palavra ou estrutura, mudando o sentido na volta.
+   (princípio: o mesmo termo aparece duas vezes e significa coisas diferentes)
 
-IDIOMAS
-Depois de criar em português, traduza para inglês e espanhol recriando o espírito, não palavra por palavra. A musicalidade da outra língua importa mais que a literalidade.
+4. GESTO CONCRETO QUE VIRA ABSTRAÇÃO — um ato pequeno e físico que, na última linha, revela algo interior.
+   (princípio: comece no corpo/objeto, termine no invisível)
 
-FORMATO DE RESPOSTA
-Responda SOMENTE com o JSON abaixo. Sem texto antes ou depois, sem markdown:
-{
-  "pt": "linha1\\nlinha2\\nlinha3",
-  "en": "line1\\nline2\\nline3",
-  "es": "línea1\\nlínea2\\nlínea3"
-}`;
+5. AFORISMO SECO — uma pequena filosofia dita sem imagem nenhuma, direta.
+   (princípio: uma frase de sabedoria que caberia numa parede)
 
-const MODOS = ["conciso cortante", "expansivo reflexivo", "misto (primeira linha longa, outras curtas, ou vice-versa)"];
-const VERTENTES = [
-  "pequena filosofia de vida",
-  "contemplação silenciosa",
-  "natureza observada",
-  "ato de escrever/criar",
-  "corpo e sensação",
-  "amor e presença íntima",
-  "tempo e memória",
-  "paradoxo do existir",
-  "observação social leve",
-  "pergunta retórica que fica no ar",
+6. PERGUNTA QUE FICA — termine com uma pergunta que não quer resposta.
+   (princípio: use com MODERAÇÃO — no máximo raramente, pois vira vício)
+
+7. OBSERVAÇÃO DO MUNDO — flagre uma cena social ou natural sem comentar, deixando ela falar.
+   (princípio: mostre, não interprete)
+
+═══ EXTRAPOLE ═══
+Vá além do seu território habitual. O cotidiano não é só a cozinha e a cama — é o ônibus, o banco, a fila, a infância, o trabalho, o corpo que envelhece, a tecnologia, o estranho na rua, a comida, o dinheiro, a cidade, a política miúda do dia. Busque o assunto que você ainda não tocou.
+
+═══ FORMA ═══
+- 3 linhas normalmente; 2 ou 4 são permitidas.
+- Alterne entre CURTÍSSIMO (2-4 palavras por linha) e EXPANDIDO (linhas longas, quase prosa). Não fique preso no médio.
+- Sem rima, sem título, sem aspas, sem explicação.
+
+═══ PROIBIÇÕES ABSOLUTAS ═══
+- NÃO use nenhuma palavra ou tema da lista de proibições que o usuário enviar.
+- NÃO repita a estrutura dos haikais recentes mostrados.
+- Se sentir que está indo para um lugar já visitado, MUDE de assunto radicalmente.
+- Evite clichês de poesia: alma, coração, destino, eternidade, lua, estrela, flor murcha.
+
+═══ TRADUÇÃO ═══
+Depois do português, recrie em inglês e espanhol — não traduza literal, recrie o poema mantendo o espírito e a musicalidade.
+
+Responda SOMENTE com este JSON, nada antes ou depois:
+{"pt": "linha1\\nlinha2\\nlinha3", "en": "line1\\nline2\\nline3", "es": "línea1\\nlínea2\\nlínea3"}`;
+
+const METODOS = [
+  "INVERSÃO DE RELAÇÃO — troque quem age e quem sofre a ação",
+  "PARADOXO VIVIDO — uma contradição que revela verdade",
+  "REPETIÇÃO QUE DESLOCA — repita mudando o sentido",
+  "GESTO CONCRETO QUE VIRA ABSTRAÇÃO — do físico ao invisível",
+  "AFORISMO SECO — filosofia direta sem imagem",
+  "OBSERVAÇÃO DO MUNDO — flagre uma cena sem comentar",
+];
+
+const TERRITORIOS = [
+  "o transporte público, a rua, a cidade",
+  "o trabalho, a rotina profissional, o dinheiro",
+  "a infância, a memória antiga, a família",
+  "o corpo que muda, envelhece, cansa",
+  "a comida, a cozinha, o alimento",
+  "um estranho, alguém visto de longe",
+  "a natureza fora de casa — o mato, o bicho, o tempo",
+  "a tecnologia, as telas, o digital",
+  "o amor e a presença do outro",
+  "a mente, o pensamento, a dúvida",
+  "a espera, o tempo passando",
+  "um objeto comum visto de perto",
 ];
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+const STOP_WORDS = new Set([
+  "a","o","e","de","do","da","dos","das","em","no","na","nos","nas","um","uma","uns","umas",
+  "para","pra","por","com","sem","mas","mais","que","se","ja","so","tao","muito","pouco",
+  "tudo","nada","algo","eu","tu","voce","ele","ela","nos","voces","eles","elas","me","te","lhe",
+  "meu","minha","seu","sua","teu","tua","dele","dela","ser","estar","ter","ir","vir","fazer",
+  "foi","era","sera","sou","esta","estou","tem","aqui","ali","la","onde","quando","como","porque",
+  "ainda","sempre","nunca","ao","aos","as","pelo","pela","quem","qual","todo","toda","todos","todas",
+  "este","esta","esse","essa","aquele","isto","isso","tambem","entao","depois","antes","agora","hoje",
+  "ontem","amanha","sim","nao","talvez","quase","apenas","mesmo","outro","outra","vai","vou","fica",
+  "sao","cabe","passa","pode","é","às","e",
+]);
+
+function normalize(w) {
+  return w.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function extractBlocked(haikais) {
+  // Analisa TODO o histórico para achar as muletas
+  const allText = haikais.map((h) => h.pt).join(" ");
+  const words = (allText.match(/[a-záàâãéêíóôõúç]+/gi) || []).map((w) => w.toLowerCase());
+  const counts = {};
+  for (const w of words) {
+    if (w.length < 4) continue;
+    if (STOP_WORDS.has(normalize(w))) continue;
+    counts[w] = (counts[w] || 0) + 1;
+  }
+  // Palavras usadas 4+ vezes no total = muletas do projeto
+  const muletas = Object.entries(counts)
+    .filter(([_, c]) => c >= 4)
+    .sort((a, b) => b[1] - a[1])
+    .map(([w]) => w);
+
+  // + todas as palavras fortes dos últimos 15
+  const recent15 = haikais.slice(0, 15).map((h) => h.pt).join(" ");
+  const recentWords = (recent15.match(/[a-záàâãéêíóôõúç]+/gi) || [])
+    .map((w) => w.toLowerCase())
+    .filter((w) => w.length >= 4 && !STOP_WORDS.has(normalize(w)));
+
+  return [...new Set([...muletas, ...recentWords])].sort();
+}
+
 async function generateHaikai() {
   const dataPath = path.join(__dirname, "../data/haikais.json");
   let haikais = [];
-
   if (fs.existsSync(dataPath)) {
-    const raw = fs.readFileSync(dataPath, "utf-8");
-    haikais = JSON.parse(raw);
+    haikais = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
   }
 
   const now = new Date();
   const date = now.toISOString().split("T")[0];
   const id = now.toISOString().replace(/[:.]/g, "-");
-
   const maxNumber = haikais.reduce((max, h) => Math.max(max, h.number || 0), 0);
   const number = maxNumber + 1;
 
-  const recent = haikais.slice(0, 8);
+  // Contexto amplo: últimos 40
+  const recent = haikais.slice(0, 40);
   const recentText =
     recent.length > 0
-      ? "Haikais RECENTES (evite repetir temas, imagens, objetos, estruturas sintáticas e palavras-chave destes):\n\n" +
-        recent.map((h, i) => `${i + 1}. ${h.pt}`).join("\n\n")
-      : "Nenhum haikai anterior ainda.";
+      ? "HAIKAIS RECENTES (não repita nada destes — nem tema, nem imagem, nem estrutura):\n\n" +
+        recent.map((h) => h.pt).join("\n·\n")
+      : "Nenhum ainda.";
 
-  const modo = pick(MODOS);
-  const vertente = pick(VERTENTES);
+  const blocked = extractBlocked(haikais);
+  const blockedText =
+    blocked.length > 0
+      ? `\n\nPALAVRAS PROIBIDAS (já muito usadas — não use NENHUMA):\n${blocked.join(", ")}`
+      : "";
 
-  const userMessage = `${recentText}
+  const metodo = pick(METODOS);
+  const territorio = pick(TERRITORIOS);
 
-Para o haikai de hoje, use preferencialmente:
-- MODO: ${modo}
-- VERTENTE TEMÁTICA: ${vertente}
+  const userMessage = `${recentText}${blockedText}
 
-Mas sinta-se livre para quebrar essa sugestão se surgir algo melhor. O importante é que o haikai seja genuinamente diferente dos recentes acima — em tema, imagem, ritmo e estrutura.`;
+Para o haikai de HOJE (#${number}):
+- MÉTODO obrigatório: ${metodo}
+- TERRITÓRIO a explorar: ${territorio}
+
+Extrapole. Vá para um lugar que os haikais recentes não foram. Se o método ou território te levar a algo inesperado e bom, siga. O pior resultado possível é soar como algo que já está na lista acima.`;
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -142,15 +191,17 @@ Mas sinta-se livre para quebrar essa sugestão se surgir algo melhor. O importan
     parsed = JSON.parse(text);
   } catch {
     const match = text.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error("Resposta inválida da API: " + text);
+    if (!match) throw new Error("Resposta inválida: " + text);
     parsed = JSON.parse(match[0]);
   }
 
   haikais.unshift({ id, date, number, ...parsed });
-
   fs.writeFileSync(dataPath, JSON.stringify(haikais, null, 2), "utf-8");
-  console.log(`Haikai #${number} (${id}) gerado (modo: ${modo}, vertente: ${vertente}).`);
-  console.log("PT:", parsed.pt);
+  console.log(`Haikai #${number} gerado.`);
+  console.log(`  método: ${metodo.split(" —")[0]}`);
+  console.log(`  território: ${territorio}`);
+  console.log(`  palavras proibidas: ${blocked.length}`);
+  console.log(`PT: ${parsed.pt}`);
 }
 
 generateHaikai().catch((err) => {
